@@ -7,20 +7,24 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,10 +33,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.stu71563.lab1_71563.Components.Input
+import com.stu71563.lab1_71563.Components.SocialButton
+import com.stu71563.lab1_71563.Constants.Constants.LightGrey
+import com.stu71563.lab1_71563.Constants.Constants.Login
+import com.stu71563.lab1_71563.Constants.Constants.WelcomeBack
+import com.stu71563.lab1_71563.Login.BSignUp
+import com.stu71563.lab1_71563.Login.bLogin
+import com.stu71563.lab1_71563.Login.gLogin
+import com.stu71563.lab1_71563.Login.gSignUp
 import com.stu71563.lab1_71563.ui.theme.Lab1_71563Theme
 
 
@@ -42,310 +57,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Lab1_71563Theme {
-                gLogin(LightGrey, WelcomeBack, Login)
-                //bLogin(Black, WelcomeBack, Login)
-                //gSignUp(LightGrey, CreateAccount, SignUp)
-                //BSignUp(Black, CreateAccount, SignUp)
+                gLogin(isDark = false)
+                //bLogin(isDark = true)
+                //gSignUp(isDark = false)
+                //BSignUp(isDark = true)
+
             }
         }
     }
-}
-
-//defining 4 constants that represent the colours Light Grey, White, Black and Light Black
-val LightGrey = Color(android.graphics.Color.parseColor("#e2e0e2"))
-val White = Color(android.graphics.Color.parseColor("#ffffff"))
-val Black = Color(android.graphics.Color.parseColor("#000000"))
-val LightBlack = Color(android.graphics.Color.parseColor("#2c2c2c"))
-const val WelcomeBack = "Welcome back you've been missed"
-const val CreateAccount = "Let's create an account for you"
-const val Login = "Login"
-const val SignUp = "Sign Up"
-
-@Composable
-fun gLogin(backgroundColour: Color, belcomeBack: String, login: String){
-
-    Surface(
-        modifier = Modifier
-            .fillMaxSize(),
-        color = backgroundColour)
-    {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceAround,
-            modifier = Modifier
-                .padding(36.dp)
-
-            ) {
-            Spacer()
-            Logo()
-            LoginInputs(LightBlack, WelcomeBack)
-            LoginButton(White, Black, login)
-            ContinueWith(LightBlack)
-
-        }
-
-    }
-
-}
-
-@Composable
-fun gSignUp(backgroundColour: Color, createAccount: String, signUp: String){
-    Surface(
-        modifier = Modifier
-            .fillMaxSize(),
-        color = backgroundColour)
-    {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceAround,
-            modifier = Modifier
-                .padding(36.dp)
-
-        ) {
-            Spacer()
-            Logo()
-            RegisterInputs(LightBlack, CreateAccount)
-            LoginButton(White, Black, SignUp)
-            notAMember(LightBlack)
-
-        }
-
-    }
-
-}
-
-@Composable
-fun bLogin(backgroundColour: Color, welcomeBack: String, login: String){
-    Surface(
-        modifier = Modifier
-            .fillMaxSize(),
-        color = backgroundColour)
-    {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceAround,
-            modifier = Modifier
-                .padding(36.dp)
-
-        ) {
-            Spacer()
-            Logo()
-            LoginInputs(White, WelcomeBack)
-            LoginButton(LightBlack, White, Login)
-            ContinueWith(White)
-
-        }
-
-    }
-
-}
-
-@Composable
-fun BSignUp(backgroundColour: Color, createAccount: String, signUp: String){
-    Surface(
-        modifier = Modifier
-            .fillMaxSize(),
-        color = backgroundColour)
-    {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceAround,
-            modifier = Modifier
-                .padding(36.dp)
-
-        ) {
-            Spacer()
-            Logo()
-            RegisterInputs(White, createAccount)
-            LoginButton(LightBlack, White, signUp)
-            notAMember(White)
-
-        }
-
-    }
-
-}
-
-@Composable
-fun Logo(){
-
-    val logo = painterResource(id = R.drawable.lock_open_512)
-
-    Image(
-        modifier = Modifier.size(100.dp),
-        painter = logo, contentDescription = "Logo of the App")
-
-}
-
-@Composable
-fun LoginInputs(fontColor: Color, welcomeBack: String){
-    val username = remember { mutableStateOf("") }
-    val password = remember { mutableStateOf("") }
-
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Text(
-            text = welcomeBack,
-            color = fontColor,
-            modifier = Modifier
-                .padding(bottom = 20.dp)
-            )
-
-        TextField(
-            value = username.value,
-            onValueChange = { username.value = it },
-            label = { Text("Username") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-
-        )
-        TextField(
-            value = password.value,
-            onValueChange = { password.value = it },
-            label = { Text("Password") },
-            modifier = Modifier
-                .fillMaxWidth()
-
-        )
-        Text(
-            text = "Forgot Password?",
-            color = fontColor,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp),
-            textAlign = TextAlign.End)
-
-    }
-}
-
-@Composable
-fun LoginButton(backgroundColour: Color, fontColor: Color, login: String) {
-
-    Button(
-        onClick = {},
-        colors = ButtonDefaults.buttonColors(backgroundColour),
-        modifier = Modifier
-            .fillMaxWidth()
-            .size(60.dp),
-        shape = RectangleShape,
-    ) {
-        Text(text = login, color = fontColor)
-    }
-
-}
-
-@Composable
-fun ContinueWith(fontColor: Color){
-    Text(
-        text = "Or Continue with",
-        color = fontColor)
-    Row(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
-    ) {
-        val googleLogo = painterResource(id = R.drawable.google__g__logo_svg)
-        val appleLogo = painterResource(id = R.drawable._5225ab6d965e5804a632b643e317bf4)
-
-
-        Image(
-            modifier = Modifier
-                .size(80.dp)
-                .padding(end = 20.dp),
-            painter = googleLogo, contentDescription = "Google logo")
-
-        Image(
-            modifier = Modifier
-                .size(80.dp)
-                .padding(start = 20.dp),
-            painter = appleLogo, contentDescription = "Apple Logo")
-
-    }
-    Row {
-        Text(
-            text = "Not a member? ",
-            color = fontColor
-        )
-        Text(
-            text = "Register now",
-            color = fontColor,
-            fontWeight = FontWeight.Bold
-        )
-    }
-    }
-
-@Composable
-fun RegisterInputs(fontColor: Color, welcomeBack: String){
-    val email = remember { mutableStateOf("") }
-    val password = remember { mutableStateOf("") }
-    val confirmPassword = remember { mutableStateOf("") }
-
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Text(
-            text = welcomeBack,
-            color = fontColor,
-            modifier = Modifier
-                .padding(bottom = 20.dp)
-        )
-
-        TextField(
-            value = email.value,
-            onValueChange = { email.value = it },
-            label = { Text("Email") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-
-        )
-        TextField(
-            value = password.value,
-            onValueChange = { password.value = it },
-            label = { Text("Password") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-
-        )
-        TextField(
-            value = confirmPassword.value,
-            onValueChange = { confirmPassword.value = it },
-            label = { Text("Confirm Password") },
-            modifier = Modifier
-                .fillMaxWidth()
-
-        )
-
-
-    }
-}
-
-@Composable
-fun notAMember(fontColor: Color){
-
-    Row {
-        Text(
-            text = "Already a member? ",
-            color = fontColor
-        )
-        Text(
-            text = "Login now",
-            color = fontColor,
-            fontWeight = FontWeight.Bold
-        )
-    }
-}
-
-@Composable
-fun Spacer(){
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .size(50.dp)
-    )
 }
