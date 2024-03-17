@@ -19,12 +19,9 @@ import com.stu71563.lab1_71563.Constants.Constants.LightBlack
 import com.stu71563.lab1_71563.Constants.Constants.LightGrey
 import com.stu71563.lab1_71563.Constants.Constants.StrokeDark
 import com.stu71563.lab1_71563.Constants.Constants.StrokeWhite
-import com.stu71563.lab1_71563.Constants.Constants.WelcomeBack
 import com.stu71563.lab1_71563.Constants.Constants.White
-import com.stu71563.lab1_71563.Groups.LoginInputs
 import com.stu71563.lab1_71563.Groups.Logo
 import com.stu71563.lab1_71563.Groups.SignUpInputs
-import com.stu71563.lab1_71563.Groups.SocialLogin
 
 @Composable
 fun BSignUp(isDark: Boolean){
