@@ -32,10 +32,10 @@ fun bLogin(isDark: Boolean){
     val inputColor: Color
 
     if (isDark){
-        backgroundColour = LightBlack
+        backgroundColour = Black
         strokeColor = StrokeDark
         fontColor = FontWhite
-        inputColor = Black
+        inputColor = LightBlack
     } else {
         backgroundColour = LightGrey
         strokeColor = StrokeWhite
@@ -55,7 +55,7 @@ fun bLogin(isDark: Boolean){
                 .padding(36.dp)
         )
         {
-            Spacer(modifier = Modifier.padding(20.dp))
+            Spacer(modifier = Modifier.padding(50.dp))
             Logo()
             LoginInputs(backGroundColor = inputColor, strokeColor = strokeColor, fontColor = fontColor, message = WelcomeBack)
             SocialLogin(backGroundColor = inputColor, strokeColor = strokeColor, fontColor = fontColor)
