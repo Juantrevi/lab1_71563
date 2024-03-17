@@ -15,8 +15,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Lab1_71563Theme {
-                //gLogin(isDark = false)
-                bLogin(isDark = true)
+                gLogin(isDark = false)
+                //bLogin(isDark = true)
                 //gSignUp(isDark = false)
                 //BSignUp(isDark = true)
 
